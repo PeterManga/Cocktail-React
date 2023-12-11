@@ -1,0 +1,25 @@
+
+.homeDesign {
+
+    height: 100%;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: lightsteelblue;
+
+
+}
+.homeDesign>div{
+    display: flex;
+    flex-wrap: wrap;
+}
+div>img{
+    padding: 20px;
+    width: 300px;
+    height: 300px;
+    
+}

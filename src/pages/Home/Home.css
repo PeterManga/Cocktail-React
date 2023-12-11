@@ -1,0 +1,44 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.homeDesign {
+
+    height:max-content;
+    width: 100vw;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: lightsteelblue;
+
+}
+/* .homeDesign>div>div>img{
+    width: 300px;
+    height: 300px;
+
+} */
+
+.homeDesign>div{
+    width: max-content;
+    height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+}
+.homeDesign>div>div{
+    gap: 10px;
+}
+div>img{
+    
+    width: 300px;
+    height: 300px;
+    
+}
+.cocktail{
+    margin: 40px;
+}
+.cocktail h1{
+    text-align: center;
+}
