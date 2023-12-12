@@ -16,3 +16,6 @@ export const bringDrinksSearch = async (criteria) => {
     }
   };
   
+  export const getDetailsById  = async () =>{
+    return await axios.get(`www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+}

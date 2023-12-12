@@ -27,18 +27,41 @@
     display: flex;
     flex-wrap: wrap;
 }
-.homeDesign>div>div{
-    gap: 10px;
-}
+
 div>img{
-    
     width: 300px;
-    height: 300px;
+    height: 100%;
     
 }
 .cocktail{
-    margin: 40px;
+    margin:  40px;
+    height: 360px;
+    width: 300px;
 }
 .cocktail h1{
     text-align: center;
+}
+.cocktail .cocktail-img{
+    
+    height: 300px;
+}
+.cocktail-img:hover{
+    zoom: 120%;
+}
+.cocktail-name{ 
+    margin: 0;
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20pxpx;
+    font-weight: bold;
+}
+.cocktail-name:hover{
+    cursor: pointer;
+    z-index: 2;
+    transform: translateY(-60px);
 }

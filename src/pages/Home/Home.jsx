@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import "./Home.css"
-import { bringDrinks } from '../../services/apiCalls';
+import { bringDrinks, bringDrinksSearch } from '../../services/apiCalls';
+
 
 
 
 export const Home = () => {
 
+    const [criteria, setCriteria] = useState("")
 
     //1 - Primero se observa el valor de los hooks
     const [cocktail, setCocktail] = useState([])
@@ -31,6 +33,16 @@ export const Home = () => {
     // })
 
     useEffect(() => {
+        bringDrinksSearch(criteria)
+          .then(result => {
+            console.log(criteria);
+            console.log(result.drinks);
+            setCocktail(result.drinks);
+          })
+          .catch(error => console.log(error));
+      }, [criteria]);
+
+    useEffect(() => {
         //Este useEffect se ejecutará SIEMPRE que se actualize el hook de estado "characters"
 
         if (cocktail.length === 0) {
@@ -53,7 +65,15 @@ export const Home = () => {
 
     return (
         <div className="homeDesign">
-            {/* <SearchBar onSearch={handleSearch} /> */}
+            {(
+                <input
+                    className='inputDesign'
+                    type="text"
+                    name="criteria"
+                    placeholder="Busca una bebida"
+                    onChange={(e) => setCriteria(e.target.value)}
+                />
+            )}
 
             {
 
@@ -64,10 +84,10 @@ export const Home = () => {
                             cocktail.map(
                                 cocktail => {
                                     return (
-                                        <div key={cocktail.idDrink} className='cocktail'>
-                                            <h1>{cocktail.strDrink}</h1>
+                                        <div key={cocktail.idDrink} className='cocktail' >
 
-                                            <img src={cocktail.strDrinkThumb} alt="" />
+                                            <div className='cocktail-img'><img src={cocktail.strDrinkThumb} alt="" /></div>
+                                            <div className='cocktail-name'><p>{cocktail.strDrink}</p></div>
                                         </div>
                                     )
                                 }
