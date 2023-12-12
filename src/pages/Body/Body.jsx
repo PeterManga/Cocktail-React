@@ -1,22 +1,11 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { Home } from '../Home/Home'
-import { Register } from '../Register/Register'
-import { Profile } from '../Profile/Profile'
-import { Login } from '../Login/Login'
-import { Cocktails } from '../Cocktails/Cocktails'
+// Body.jsx
+import React from 'react';
+import { AppRoutes } from '../Routes/Routes';
 
 export const Body = () => {
-
-    return (
-        <>
-            <Routes>
-                <Route path="*" element={<Navigate to={"/"}/>}/>
-                <Route path="/" element={<Home />}/>
-                <Route path="/cocktails/:id" element={Cocktails} />
-                <Route path="/register" element={<Register />}/>
-                <Route path="/login" element={<Login/>} />
-                <Route path="/profile" element={<Profile />}/>
-            </Routes>
-        </>
-    )
-}
+  return (
+    <>
+      <AppRoutes />
+    </>
+  );
+};

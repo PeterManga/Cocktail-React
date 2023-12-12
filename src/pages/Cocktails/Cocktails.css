@@ -1,0 +1,72 @@
+:root{
+    height: max-content;
+}
+.CocktailDesign{
+
+    height:max-content;
+    width: max-content;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+.Cocktail-Name{
+    margin-bottom: 15px;
+    font-size: 50px;
+    color: #000;
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: uppercase
+}
+.Cocktail-Name h1{
+    font-family: 'TradeGothicW01-BoldCn20_675334';
+    font-size: 30px;
+    line-height: 60px;
+    font-weight: 500;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.Cocktail-Name h1,h2,h3,h4{
+    font-family: 'TradeGothicW01-BoldCn20_675334';
+    color: #363636;
+}
+.Cocktail-Recipe{
+    display: flex;
+    height: auto;
+}
+.cocktail-Instructions{
+    width: max-content;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+   
+}
+.Cocktail-ingredients{
+    width: 50%;
+    border-right: 2px solid black;
+    height: auto;
+}
+.Cocktail-ingredients ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.Cocktail-Table{
+    width: 110%;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: auto;
+    border: 1px solid black;
+
+}
+.Cocktail-Instructions{
+    padding: 0 15px;
+}

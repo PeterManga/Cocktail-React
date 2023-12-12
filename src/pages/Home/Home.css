@@ -3,17 +3,15 @@
     margin: 0;
 }
 .homeDesign {
-
     height:max-content;
     width: 100vw;
-    
+    min-height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    background-color: lightsteelblue;
-
+    background-color: #DCB58D;
 }
 /* .homeDesign>div>div>img{
     width: 300px;
@@ -21,7 +19,7 @@
 
 } */
 
-.homeDesign>div{
+.home-cocktails{
     width: max-content;
     height: max-content;
     display: flex;
@@ -34,20 +32,18 @@ div>img{
     
 }
 .cocktail{
-    margin:  40px;
+    margin: 40px;
+    
     height: 360px;
     width: 300px;
 }
-.cocktail h1{
+.cocktail>h1{
     text-align: center;
 }
-.cocktail .cocktail-img{
-    
+.cocktail-img{
     height: 300px;
 }
-.cocktail-img:hover{
-    zoom: 120%;
-}
+
 .cocktail-name{ 
     margin: 0;
     height: 60px;
@@ -64,4 +60,13 @@ div>img{
     cursor: pointer;
     z-index: 2;
     transform: translateY(-60px);
+}
+.search{
+    display: flex;
+    height: 100px;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    
 }

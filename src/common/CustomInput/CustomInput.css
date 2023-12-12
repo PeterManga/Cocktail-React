@@ -1,13 +1,15 @@
 
 .inputDesign {
-
     height: 2em;
     width: 16em;
-
     border-radius: 1em;
     margin-bottom: 1em;
-
-    border: 0.2em solid darkblue;
+    display: block;
+    border: 3px solid #00B4CC;
+    padding: 5px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
 }
 
 .inputError {

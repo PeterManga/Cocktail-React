@@ -1,107 +1,72 @@
+// Importa useState, useEffect y useNavigate
 import { useState, useEffect } from 'react';
-import "./Home.css"
+import { useNavigate } from 'react-router-dom';
+import "./Home.css";
 import { bringDrinks, bringDrinksSearch } from '../../services/apiCalls';
 
-
-
-
 export const Home = () => {
+  const navigate = useNavigate();
 
-    const [criteria, setCriteria] = useState("")
+  const handleCocktailClick = (idDrink) => {
+    navigate(`/cocktails/${idDrink}`);
+  };
 
-    //1 - Primero se observa el valor de los hooks
-    const [cocktail, setCocktail] = useState([])
+  const [criteria, setCriteria] = useState("");
+  const [cocktail, setCocktail] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    //3 - Después de la zona de renderizado se ejecutan los hooks useEffect y funciones
+  useEffect(() => {
+    setLoading(true);
+    bringDrinksSearch(criteria)
+      .then(result => {
+        console.log(criteria);
+        console.log(result.drinks);
+        setCocktail(result.drinks || []); // Si no hay resultados, establece un array vacío
+      })
+      .catch(error => console.log(error))
+      .finally(() => setLoading(false));
+  }, [criteria]);
 
-    // useEffect(()=>{
-    //     //Este useEffect siempre se ejecutará nada más se monte el componente por primera vez
+  useEffect(() => {
+    if (cocktail.length === 0 && !loading) {
+      bringDrinks()
+        .then(result => {
+          console.log(result.data.drinks);
+          setCocktail(result.data.drinks);
+        })
+        .catch(error => console.log(error))
+        .finally(() => setLoading(false));
+    }
+  }, [cocktail, loading]);
 
+  return (
+    <div className="homeDesign">
+      <div className='search'>
+        <input
+          className='inputDesign'
+          type="text"
+          name="criteria"
+          placeholder="Busca una bebida"
+          onChange={(e) => setCriteria(e.target.value)}
+        />
+      </div>
 
-    // },[])
+      {loading && <div>Cargando...</div>}
 
-    // useEffect(()=>{
-    //     //Este useEffect se ejecutará SIEMPRE que haya una actualización en el componente
+      {!loading && cocktail.length === 0 && (
+        <div>No se encontraron resultados de la búsqueda.</div>
+      )}
 
-    // })
-
-    // useEffect(()=>{
-    //         //Este useEffect se ejecutará cuando se desmonte el componente
-    //     return () => {
-    //         console.log("byee byeeee")
-    //     }
-    // })
-
-    useEffect(() => {
-        bringDrinksSearch(criteria)
-          .then(result => {
-            console.log(criteria);
-            console.log(result.drinks);
-            setCocktail(result.drinks);
-          })
-          .catch(error => console.log(error));
-      }, [criteria]);
-
-    useEffect(() => {
-        //Este useEffect se ejecutará SIEMPRE que se actualize el hook de estado "characters"
-
-        if (cocktail.length === 0) {
-            //Como al cargarse el componente la longitud de characters es 0... ejecuto la función que los traerá
-            bringDrinks()
-                .then(
-                    result => {
-                        console.log(result.data.drinks)
-                        setCocktail(result.data.drinks)
-                    }
-                )
-                .catch(error => console.log(error))
-        }
-        //Al tener una longitud superior a 0, no entraríamos en el condicional, por lo tanto no llamamos de nuevo a la API
-    }, [cocktail])
-
-    // const handleSearch = (searchResults) => {
-    //     setCocktail(searchResults);
-    // };
-
-    return (
-        <div className="homeDesign">
-            {(
-                <input
-                    className='inputDesign'
-                    type="text"
-                    name="criteria"
-                    placeholder="Busca una bebida"
-                    onChange={(e) => setCriteria(e.target.value)}
-                />
-            )}
-
-            {
-
-                cocktail.length > 0
-                                    
-                    ? (<div>
-                        {
-                            cocktail.map(
-                                cocktail => {
-                                    return (
-                                        <div key={cocktail.idDrink} className='cocktail' >
-
-                                            <div className='cocktail-img'><img src={cocktail.strDrinkThumb} alt="" /></div>
-                                            <div className='cocktail-name'><p>{cocktail.strDrink}</p></div>
-                                        </div>
-                                    )
-                                }
-                            )
-                        }
-
-                    </div>)
-
-                    : (<div>Los datos estan viniendo de la API</div>)
-            }
+      {!loading && cocktail.length > 0 && (
+        <div className='home-cocktails'>
+          {cocktail.map(cocktail => (
+            <div key={cocktail.idDrink} className='cocktail' onClick={() => handleCocktailClick(cocktail.idDrink)}>
+              <div className='cocktail-img'><img src={cocktail.strDrinkThumb} alt="" /></div>
+              <div className='cocktail-name'><p>{cocktail.strDrink}</p></div>
+            </div>
+          ))}
         </div>
-    )
-
-
-
-
-}
+      )}
+    </div>
+  );
+};
