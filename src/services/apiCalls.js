@@ -19,7 +19,7 @@ export const bringDrinksSearch = async (criteria) => {
   export const getDetailsById = async (id) => {
     try {
       const response = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
-      console.log(response);
+     // console.log(response);
       return response.data.drinks; // Corregir aquí, acceder a response.data.drinks
     } catch (error) {
       throw error;
@@ -35,3 +35,8 @@ export const bringDrinksSearch = async (criteria) => {
       throw error;
     }
   };
+
+  export const bringAllCharacters = async () => {
+
+    return await axios.get(`https://rickandmortyapi.com/api/character/?page=8`)
+}

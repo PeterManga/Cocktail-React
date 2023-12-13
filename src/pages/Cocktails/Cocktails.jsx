@@ -3,6 +3,20 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getDetailsById, getIngredientsImages } from '../../services/apiCalls';
 import "./Cocktails.css"
+
+// Función para obtener la URL de la imagen del ingrediente
+const getIngredientImageUrl = async (ingredient) => {
+  try {
+    const response = await getIngredientsImages(ingredient);
+    console.log(response)
+    return response;
+  } catch (error) {
+    console.error("Error obteniendo la imagen del ingrediente:", error);
+    return null;
+  }
+};
+
+
 export const Cocktails = () => {
   const { id } = useParams();
 
@@ -21,13 +35,17 @@ export const Cocktails = () => {
     return <div>Cargando...</div>;
   }
 
+
+
+
+  
   return (
     <div className="CocktailDesign">
       <div>
         <div className='Cocktail-Name'>
           <p>{cocktailDetails.strDrink}</p>
         </div>
-        <img src={cocktailDetails.strDrinkThumb} alt="" />
+        <img src={cocktailDetails.strDrinkThumb} alt="cocktail" />
         <div className='Cocktail-Table'>
           <div className='Cocktail-Recipe'>
             <div className='Cocktail-ingredients'>
@@ -52,10 +70,6 @@ export const Cocktails = () => {
         </div>
         <p>Tipo de vaso: {cocktailDetails.strGlass}</p>
 
-        {/* Renderiza ingredientes */}
-
-
-        {/* Renderiza anotaciones */}
         {cocktailDetails.strTags && <p>Anotaciones: {cocktailDetails.strTags}</p>}
 
         <p>Categoría: {cocktailDetails.strCategory}</p>

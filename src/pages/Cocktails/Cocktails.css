@@ -4,7 +4,6 @@
 .CocktailDesign{
 
     height:max-content;
-    width: max-content;
     width: 100vw;
     display: flex;
     flex-direction: row;
@@ -38,9 +37,10 @@
 .Cocktail-Recipe{
     display: flex;
     height: auto;
+    max-width   : 775px;
 }
 .cocktail-Instructions{
-    width: max-content;
+    width: 50%;
     display: flex;
     text-align: center;
     justify-content: center;
@@ -58,6 +58,7 @@
     margin: 0;
 }
 .Cocktail-Table{
+    margin: 50px 0;
     width: 110%;
     padding: 20px;
     align-items: center;
@@ -69,4 +70,7 @@
 }
 .Cocktail-Instructions{
     padding: 0 15px;
+}
+.Cocktail-Image{
+    margin-bottom: 500px;
 }
