@@ -14,6 +14,7 @@ CocktailReact is a web application developed in React that allows you to explore
     npm install
 
 ## Project Tree
+
 |   ├───node_modules
 │   ├───.bin
 │   ├───.vite
