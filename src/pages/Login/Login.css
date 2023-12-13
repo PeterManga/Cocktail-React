@@ -2,14 +2,13 @@
 .loginDesign {
 
     height: 90vh;
-    width: 100vw;
-
+    width: 100vw;   
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    background-color: beige;
+    background-color: rgb(247, 247, 247);
 
 }
 
@@ -19,11 +18,9 @@
 
     height: 3.4em;
     width: 7.8em;
-    background-color: orange;
+    background-color: rgb(0, 0, 0);
     color: white;
-
     border-radius: 1em;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,6 +30,6 @@
 
 .buttonDesign:hover {
 
-    background-color: darkorange;
+    background-color:#4F3B34;
     transition: 0.2s;
 }

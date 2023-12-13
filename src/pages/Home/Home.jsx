@@ -1,42 +1,42 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Home.css";
 import { bringDrinks, bringDrinksSearch } from '../../services/apiCalls';
 
 export const Home = () => {
-  // Utilizamos el hook useNavigate para la navegación entre páginas
   const navigate = useNavigate();
-
-  // Función para manejar el clic en un cóctel y redirigir a su página de detalles
-  const handleCocktailClick = (idDrink) => {
-    navigate(`/cocktails/${idDrink}`);
-  };
-
-  // Estados para el criterio de búsqueda, lista de cócteles y estado de carga
   const [criteria, setCriteria] = useState("");
   const [cocktail, setCocktail] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Efecto para buscar cócteles basados en el criterio de búsqueda
-  useEffect(() => {
-    setLoading(true);
-    bringDrinksSearch(criteria)
-      .then(result => {
-        console.log(criteria);
-        console.log(result.drinks);
+  // Utilizamos useCallback para memoizar la función y evitar recreaciones innecesarias
+  const delayedSearch = useCallback(
+    // La función interna es la que se ejecutará después de cierto tiempo (en este caso, 500 ms)
+    debounce(async (searchCriteria) => {
+      try {
+        setLoading(true);
+        const result = await bringDrinksSearch(searchCriteria);
         // Establecer la lista de cócteles o un array vacío si no hay resultados
         setCocktail(result.drinks || []);
-      })
-      .catch(error => console.log(error))
-      .finally(() => setLoading(false));
-  }, [criteria]);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }, 500),
+    [] // La dependencia está vacía porque no queremos que se vuelva a crear la función en cada renderización
+  );
 
-  // Efecto para cargar cócteles si la lista está vacía y no hay carga en curso
   useEffect(() => {
+    // Llamamos a la función de búsqueda con el criterio actual después de que este no cambie durante 500 ms
+    delayedSearch(criteria);
+  }, [criteria, delayedSearch]);
+
+  useEffect(() => {
+    // Si la lista está vacía y no hay carga en curso, traemos todos los cócteles
     if (cocktail.length === 0 && !loading) {
       bringDrinks()
         .then(result => {
-          console.log(result.data.drinks);
           // Establecer la lista de cócteles
           setCocktail(result.data.drinks);
         })
@@ -45,9 +45,12 @@ export const Home = () => {
     }
   }, [cocktail, loading]);
 
+  const handleCocktailClick = (idDrink) => {
+    navigate(`/cocktails/${idDrink}`);
+  };
+
   return (
     <div className="homeDesign">
-      {/* Input para ingresar el criterio de búsqueda */}
       <div className='search'>
         <input
           className='inputDesign'
@@ -58,20 +61,16 @@ export const Home = () => {
         />
       </div>
 
-      {/* Mensaje de carga si está en curso */}
       {loading && <div>Cargando...</div>}
 
-      {/* Mensaje si no hay resultados de búsqueda */}
       {!loading && cocktail.length === 0 && (
         <div>No se encontraron resultados de la búsqueda.</div>
       )}
 
-      {/* Mostrar la lista de cócteles si hay resultados */}
       {!loading && cocktail.length > 0 && (
         <div className='home-cocktails'>
           {cocktail.map(cocktail => (
             <div key={cocktail.idDrink} className='cocktail' onClick={() => handleCocktailClick(cocktail.idDrink)}>
-              {/* Mostrar la imagen y el nombre del cóctel */}
               <div className='cocktail-img'><img src={cocktail.strDrinkThumb} alt="" /></div>
               <div className='cocktail-name'><p>{cocktail.strDrink}</p></div>
             </div>
@@ -81,3 +80,16 @@ export const Home = () => {
     </div>
   );
 };
+
+// Función de debounce
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}

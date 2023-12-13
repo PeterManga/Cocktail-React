@@ -31,6 +31,7 @@ export const Login = () => {
   const logMe = () => {
     // Buscamos al usuario en la lista de usuarios
     const user = users.get(credentials.username);
+    
 
     // Verificamos si el usuario existe y la contraseña coincide
     if (user && user.password === credentials.password) {
@@ -68,7 +69,7 @@ export const Login = () => {
       <div>{mensajeError}</div>
       {/* Botón para iniciar sesión */}
       <div className='buttonDesign' onClick={logMe}>
-        Log me!
+        Log me
       </div>
     </div>
   );

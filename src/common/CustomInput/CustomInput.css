@@ -5,11 +5,11 @@
     border-radius: 1em;
     margin-bottom: 1em;
     display: block;
-    border: 3px solid #00B4CC;
+    border: 3px solid #000000;
     padding: 5px;
     border-radius: 5px 0 0 5px;
     outline: none;
-    color: #9DBFAF;
+    color: #84470a;
 }
 
 .inputError {

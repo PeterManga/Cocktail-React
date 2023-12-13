@@ -50,7 +50,8 @@ div>img{
     height: 60px;
     width: 100%;
     text-align: center;
-    background-color: white;
+    color: white;
+    background-color:#4F3B34;
     display: flex;
     align-items: center;
     justify-content: center;

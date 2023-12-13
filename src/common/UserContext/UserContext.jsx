@@ -1,46 +1,35 @@
-/*
- * Componente funcional SearchBar que representa una barra de búsqueda para bebidas.
- * @param {Function} props.onSearch - Función de retorno de llamada para manejar los resultados de búsqueda.
- */
-import React, { useState } from 'react';
-import { bringDrinksSearch } from '../../services/apiCalls';
+// UserContext.jsx
+import React, { createContext, useContext, useState } from 'react';
 
-const SearchBar = ({ onSearch }) => {
-  // Estado local para almacenar el término de búsqueda
-  const [searchTerm, setSearchTerm] = useState('');
+// Creamos un contexto para el usuario
+const UserContext = createContext();
 
-  /**
-   * Maneja la búsqueda de bebidas según el término de búsqueda ingresado.
-   * Realiza una llamada a la API y llama a la función de retorno de llamada onSearch con los resultados.
-   */
-  const handleSearch = async () => {
-    try {
-      // Realiza una llamada a la función bringDrinksSearch con el término de búsqueda actual
-      const response = await bringDrinksSearch(searchTerm);
-      // Llama a la función de retorno de llamada onSearch con los datos de bebidas obtenidos
-      onSearch(response.data.drinks);
-    } catch (error) {
-      // Maneja los errores mostrando un mensaje en la consola
-      console.error('Error fetching data:', error);
-    }
+// Proveedor de contexto que contiene el estado del usuario
+const UserProvider = ({ children }) => {
+  // Estado local para almacenar la lista de usuarios
+  const [users, setUsers] = useState(new Map());
+
+  // Función para agregar un nuevo usuario al estado
+  const addUser = (user) => {
+    setUsers((prevUsers) => new Map(prevUsers).set(user.username, user));
   };
 
-  // Devuelve el JSX que representa la barra de búsqueda
+  // Aquí puedes agregar más lógica según tus requisitos
+
   return (
-    <div className="searchBar">
-      {/* Campo de entrada de texto para ingresar el término de búsqueda */}
-      <input
-        type="text"
-        value={searchTerm}
-        // Maneja el cambio en el campo de entrada actualizando el estado local searchTerm
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search for a drink..."
-      />
-      {/* Botón para iniciar la búsqueda, al hacer clic llama a la función handleSearch */}
-      <button onClick={handleSearch}>Search</button>
-    </div>
+    <UserContext.Provider value={{ users, addUser }}>
+      {children}
+    </UserContext.Provider>
   );
 };
 
-// Exporta el componente SearchBar como componente predeterminado
-export default SearchBar;
+// Función de gancho personalizada para acceder al contexto del usuario
+const useUserContext = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error('useUserContext debe ser utilizado dentro de un UserProvider');
+  }
+  return context;
+};
+
+export { UserProvider, useUserContext };

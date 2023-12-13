@@ -1,4 +1,3 @@
-
 .registerDesign {
 
     height: 90vh;
@@ -9,10 +8,9 @@
     justify-content: center;
     align-items: center;
 
-    background-color: lightgoldenrodyellow;
+    background-color: rgb(252, 252, 252);
 
 }
-
 .msgError {
     color: red;
 }
